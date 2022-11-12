@@ -39,17 +39,26 @@ import okhttp3.OkHttpClient;
 @SuppressWarnings("rawtypes")
 public final class Conaco<V> {
 
+    private static final String TAG = Conaco.class.getSimpleName();
+
+    @IntDef({SOURCE_MEMORY, SOURCE_DISK, SOURCE_NETWORK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Source {
+    }
+
     public static final int SOURCE_MEMORY = 0;
     public static final int SOURCE_DISK = 1;
     public static final int SOURCE_NETWORK = 2;
-    private static final String TAG = Conaco.class.getSimpleName();
+
     private final ValueHelper<V> mHelper;
     private final ValueCache<V> mCache;
     private final OkHttpClient mOkHttpClient;
     private final Register<V> mRegister;
+
     private final SerialThreadExecutor mDiskExecutor;
     private final ThreadPoolExecutor mNetworkExecutor;
     private final AtomicInteger mIdGenerator;
+
     private final boolean mDebug;
 
     private Conaco(Builder<V> builder) {
@@ -186,11 +195,6 @@ public final class Conaco<V> {
         task.clearUnikery();
 
         onUnregisterConacoTask(task);
-    }
-
-    @IntDef({SOURCE_MEMORY, SOURCE_DISK, SOURCE_NETWORK})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Source {
     }
 
     public static class Builder<T> extends BeerBelly.BeerBellyParams {

@@ -146,16 +146,6 @@ public class UConfigFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public int getFragmentTitle() {
-        return R.string.u_config;
-    }
-
     private class UConfigWebViewClient extends WebViewClient {
 
         @Override
@@ -175,5 +165,15 @@ public class UConfigFragment extends BaseFragment {
             progress.setVisibility(View.GONE);
             loaded = true;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public int getFragmentTitle() {
+        return R.string.u_config;
     }
 }

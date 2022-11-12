@@ -33,12 +33,17 @@ import com.hippo.ehviewer.R;
 
 public class CheckTextView extends AppCompatCheckedTextView implements View.OnClickListener {
 
-    private final Rect mSelfBounds = new Rect();
-    private final Rect mOverlayBounds = new Rect();
-    protected boolean mForegroundInPadding = true;
-    boolean mForegroundBoundsChanged = false;
     private Drawable mForeground;
+
+    private final Rect mSelfBounds = new Rect();
+
+    private final Rect mOverlayBounds = new Rect();
+
     private int mForegroundGravity = Gravity.FILL;
+
+    protected boolean mForegroundInPadding = true;
+
+    boolean mForegroundBoundsChanged = false;
 
     public CheckTextView(Context context) {
         this(context, null);
@@ -132,16 +137,6 @@ public class CheckTextView extends AppCompatCheckedTextView implements View.OnCl
     }
 
     /**
-     * Returns the drawable used as the foreground of this FrameLayout. The
-     * foreground drawable, if non-null, is always drawn on top of the children.
-     *
-     * @return A Drawable or null if no foreground was set.
-     */
-    public Drawable getForeground() {
-        return mForeground;
-    }
-
-    /**
      * Supply a Drawable that is to be rendered on top of all of the child
      * views in the frame layout.  Any padding in the Drawable will be taken
      * into account by ensuring that the children are inset to be placed
@@ -174,6 +169,16 @@ public class CheckTextView extends AppCompatCheckedTextView implements View.OnCl
             requestLayout();
             invalidate();
         }
+    }
+
+    /**
+     * Returns the drawable used as the foreground of this FrameLayout. The
+     * foreground drawable, if non-null, is always drawn on top of the children.
+     *
+     * @return A Drawable or null if no foreground was set.
+     */
+    public Drawable getForeground() {
+        return mForeground;
     }
 
     @Override

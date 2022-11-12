@@ -26,6 +26,7 @@ import com.hippo.conaco.ConacoTask;
 import com.hippo.conaco.Unikery;
 import com.hippo.image.ImageBitmap;
 import com.hippo.image.ImageDrawable;
+import com.hippo.image.RecycledException;
 import com.hippo.widget.ObservedTextView;
 
 public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap>,
@@ -126,7 +127,7 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
         ImageDrawable drawable;
         try {
             drawable = new ImageDrawable(value);
-        } catch (Exception e) {
+        } catch (RecycledException e) {
             Log.d(TAG, "The ImageBitmap is recycled", e);
             return false;
         }

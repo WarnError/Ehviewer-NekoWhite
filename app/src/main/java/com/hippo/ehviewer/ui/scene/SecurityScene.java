@@ -32,6 +32,7 @@ import androidx.biometric.BiometricPrompt;
 import com.hippo.ehviewer.R;
 import com.hippo.ehviewer.Settings;
 import com.hippo.ehviewer.ui.MainActivity;
+import com.hippo.hardware.ShakeDetector;
 import com.hippo.widget.lockpattern.LockPatternUtils;
 import com.hippo.widget.lockpattern.LockPatternView;
 import com.hippo.yorozuya.ObjectUtils;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 public class SecurityScene extends SolidScene implements
-        LockPatternView.OnPatternListener {
+        LockPatternView.OnPatternListener, ShakeDetector.OnShakeListener {
 
     private static final int MAX_RETRY_TIMES = 5;
     private static final String KEY_RETRY_TIMES = "retry_times";
@@ -51,6 +52,7 @@ public class SecurityScene extends SolidScene implements
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
     private BiometricPrompt.PromptInfo promptInfo;
     private BiometricPrompt biometricPrompt;
     private boolean canAuthenticate = false;
@@ -70,6 +72,10 @@ public class SecurityScene extends SolidScene implements
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         if (null != mSensorManager) {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (null != mAccelerometer) {
+                mShakeDetector = new ShakeDetector();
+                mShakeDetector.setOnShakeListener(this);
+            }
         }
 
         if (null == savedInstanceState) {
@@ -110,11 +116,16 @@ public class SecurityScene extends SolidScene implements
 
         mSensorManager = null;
         mAccelerometer = null;
+        mShakeDetector = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (null != mShakeDetector) {
+            mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        }
 
         if (canAuthenticate) {
             startBiometricPrompt();
@@ -128,6 +139,10 @@ public class SecurityScene extends SolidScene implements
     @Override
     public void onPause() {
         super.onPause();
+
+        if (null != mShakeDetector) {
+            mSensorManager.unregisterListener(mShakeDetector);
+        }
     }
 
     @Override
@@ -188,6 +203,19 @@ public class SecurityScene extends SolidScene implements
             if (mRetryTimes <= 0) {
                 finish();
             }
+        }
+    }
+
+    @Override
+    public void onShake(int count) {
+        if (count == 10) {
+            MainActivity activity = getMainActivity();
+            if (null == activity) {
+                return;
+            }
+            Settings.putSecurity("");
+            startSceneForCheckStep(CHECK_STEP_SECURITY, getArguments());
+            finish();
         }
     }
 }

@@ -72,11 +72,6 @@ public class MyTagsFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public int getFragmentTitle() {
-        return R.string.my_tags;
-    }
-
     private class MyTagsWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -93,5 +88,10 @@ public class MyTagsFragment extends BaseFragment {
         public void onPageFinished(WebView view, String url) {
             progress.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public int getFragmentTitle() {
+        return R.string.my_tags;
     }
 }

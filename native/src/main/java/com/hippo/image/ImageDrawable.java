@@ -31,9 +31,9 @@ public class ImageDrawable extends Drawable implements Animatable, ImageBitmap.C
     private final ImageBitmap mImageBitmap;
     private final Paint mPaint;
 
-    public ImageDrawable(ImageBitmap imageBitmap) throws Exception {
+    public ImageDrawable(ImageBitmap imageBitmap) throws RecycledException {
         if (!imageBitmap.obtain()) {
-            throw new Exception();
+            throw new RecycledException();
         }
 
         mImageBitmap = imageBitmap;

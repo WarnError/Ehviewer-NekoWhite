@@ -296,6 +296,11 @@ public class EhApplication extends SceneApplication {
         return application.mFavouriteStatusRouter;
     }
 
+    @NonNull
+    public static String getDeveloperEmail() {
+        return "nekoworkshop$protonmail.com".replace('$', '@');
+    }
+
     @SuppressLint("StaticFieldLeak")
     @Override
     public void onCreate() {
@@ -334,6 +339,8 @@ public class EhApplication extends SceneApplication {
         if (EhDB.needMerge()) {
             EhDB.mergeOldDB(this);
         }
+
+        Analytics.start(this);
 
         LocaleDelegate.setDefaultLocale(Settings.getLocale());
         DayNightDelegate.setApplicationContext(this);

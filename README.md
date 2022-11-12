@@ -1,7 +1,13 @@
-<h1 align="center">
-  <img src="app/src/main/ic_launcher-playstore.png" width="150">
-  <br>EhViewer-NekoInverter [DEPRECATED]<br>
-</h1>
+**Project is no longer actively maintained.** Please move to general manga reader like [Tachiyomi](https://tachiyomi.org/).
+
+---
+
+
+### [下载](https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public)
+
+[Download](https://install.appcenter.ms/users/nekoinverter/apps/ehviewer/distribution_groups/public)
+
+# EhViewer
 
 <p align="center">
   <a href="https://github.com/xb2016/EhViewer-NekoInverter/actions/workflows/ci.yml">
@@ -12,43 +18,10 @@
   </a>
 </p>
 
-<div align="center">
-  <h3>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#描述">
-    描述
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#下载">
-    下载
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#链接">
-    链接
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#问题">
-    问题
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#截图">
-    截图
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#感谢">
-    感谢
-    </a>
-    <span> | </span>
-    <a href="https://github.com/xb2016/EhViewer-NekoInverter#许可证">
-    许可证
-    </a>
-  </h3>
-</div>
+这是一个 E-Hentai Android 平台的浏览器。
 
-# 描述
+An E-Hentai Application for Android.
 
-NekoInverter 版的 EhViewer [白E]，原作者已不再维护
-
-本仓库仅作自用目的，不开放 issue，仅同步 [Ehviewer-Overhauled](https://github.com/Ehviewer-Overhauled/Ehviewer) 的更新以保证最低限度的可用性
 
 可能需要 Android 10 及以上版本系统才能使用
 

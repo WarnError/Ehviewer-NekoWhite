@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowInsets;
@@ -46,8 +47,10 @@ public abstract class EhActivity extends MaterialActivity {
     }
 
     public static String getTheme(Context context) {
-        if (isBlackNightTheme() && isNightMode(context.getResources().getConfiguration()))
+        if (isBlackNightTheme()
+                && isNightMode(context.getResources().getConfiguration()))
             return THEME_BLACK;
+
         return THEME_DEFAULT;
     }
 
@@ -67,21 +70,26 @@ public abstract class EhActivity extends MaterialActivity {
 
     @StyleRes
     public int getThemeStyleRes(Context context) {
-        if (THEME_BLACK.equals(getTheme(context))) {
-            return R.style.ThemeOverlay_Black;
+        switch (getTheme(context)) {
+            case THEME_BLACK:
+                return R.style.ThemeOverlay_Black;
+            case THEME_DEFAULT:
+            default:
+                return R.style.ThemeOverlay;
         }
-        return R.style.ThemeOverlay;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ((EhApplication) getApplication()).registerActivity(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         ((EhApplication) getApplication()).unregisterActivity(this);
     }
 
@@ -106,10 +114,14 @@ public abstract class EhActivity extends MaterialActivity {
             WindowInsets rootWindowInsets = window.getDecorView().getRootWindowInsets();
             if (rootWindowInsets != null && rootWindowInsets.getSystemWindowInsetBottom() >= Resources.getSystem().getDisplayMetrics().density * 40) {
                 window.setNavigationBarColor(ResourcesKt.resolveColor(getTheme(), android.R.attr.navigationBarColor) & 0x00ffffff | -0x20000000);
-                window.setNavigationBarContrastEnforced(false);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.setNavigationBarContrastEnforced(false);
+                }
             } else {
                 window.setNavigationBarColor(Color.TRANSPARENT);
-                window.setNavigationBarContrastEnforced(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.setNavigationBarContrastEnforced(true);
+                }
             }
         });
     }

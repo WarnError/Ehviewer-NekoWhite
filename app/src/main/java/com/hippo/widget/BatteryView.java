@@ -41,8 +41,7 @@ public class BatteryView extends AppCompatTextView {
     private boolean mCharging = false;
 
     private BatteryDrawable mDrawable;
-    private boolean mAttached = false;
-    private boolean mIsChargerWorking = false;    private final Runnable mCharger = new Runnable() {
+    private final Runnable mCharger = new Runnable() {
 
         private int level = 0;
 
@@ -56,36 +55,9 @@ public class BatteryView extends AppCompatTextView {
             getHandler().postDelayed(mCharger, 200);
         }
     };
-    public BatteryView(Context context) {
-        super(context);
-        init();
-    }
-
-    public BatteryView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public BatteryView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
-        init();
-
-        TypedArray typedArray = context.obtainStyledAttributes(
-                attrs, R.styleable.BatteryView, defStyleAttr, 0);
-        mColor = typedArray.getColor(R.styleable.BatteryView_color, Color.WHITE);
-        mWarningColor = typedArray.getColor(R.styleable.BatteryView_warningColor, Color.RED);
-        typedArray.recycle();
-
-        mDrawable.setColor(mColor);
-        mDrawable.setWarningColor(mWarningColor);
-    }
-
-    private void init() {
-        mDrawable = new BatteryDrawable();
-        int height = (int) getTextSize();
-        mDrawable.setBounds(0, 0, (int) (height / 0.618f), height);
-        setCompoundDrawables(mDrawable, null, null, null);
-    }    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    private boolean mAttached = false;
+    private boolean mIsChargerWorking = false;
+    private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 
         @Override
         @SuppressLint("SetTextI18n")
@@ -115,6 +87,37 @@ public class BatteryView extends AppCompatTextView {
             }
         }
     };
+
+    public BatteryView(Context context) {
+        super(context);
+        init();
+    }
+
+    public BatteryView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public BatteryView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        init();
+
+        TypedArray typedArray = context.obtainStyledAttributes(
+                attrs, R.styleable.BatteryView, defStyleAttr, 0);
+        mColor = typedArray.getColor(R.styleable.BatteryView_color, Color.WHITE);
+        mWarningColor = typedArray.getColor(R.styleable.BatteryView_warningColor, Color.RED);
+        typedArray.recycle();
+
+        mDrawable.setColor(mColor);
+        mDrawable.setWarningColor(mWarningColor);
+    }
+
+    private void init() {
+        mDrawable = new BatteryDrawable();
+        int height = (int) getTextSize();
+        mDrawable.setBounds(0, 0, (int) (height / 0.618f), height);
+        setCompoundDrawables(mDrawable, null, null, null);
+    }
 
     @Override
     public void setTextColor(int color) {
@@ -170,10 +173,4 @@ public class BatteryView extends AppCompatTextView {
     private void unregisterReceiver() {
         getContext().unregisterReceiver(mIntentReceiver);
     }
-
-
-
-
-
-
 }
